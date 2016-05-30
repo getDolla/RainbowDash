@@ -1,79 +1,43 @@
-boolean isReaction = false;
+Ball[] balls;
 
-class Ball {
+boolean reactionStarted;
 
-  float ballX;
-  float ballY;
 
-  float h;
-  int rlooks;
-  int glooks;
-  int blooks;
-  
-  //create a variable for speed
-  float speedY;
-  float speedX; 
+void setup() {
+  size(600, 600);
+  reactionStarted = false;
+  balls = new Ball[25];
+  for (int i=0; i < balls.length; i++ )
+    balls[i] = new Ball();
+  balls[0].state = Ball.DEAD;
+}
 
-  Ball() {
-    ballX = (float) (Math.random() * 500);
-    ballY = (float) (Math.random() * 500);
-    
-    h = (float) (Math.random() * 20)+ 4;
-    rlooks = (int) (Math.random() * 220);
-    glooks = (int) (Math.random() * 220);
-    blooks = (int) (Math.random() * 220);
-    
-    speedY = (float) (Math.random() * 6) + 2;
-    speedX = (float) (Math.random() * 6) + 2;
-  }
-  
-  void move() {
-    ballY = ballY + speedY;
-    ballX = ballX + speedX;
-  
-    if (ballY > height - h) {
-      // set the position to be on the floor
-      ballY = height - h;
-      // and make the y speed in the opposite direction
-      speedY = -speedY;
-    }
-  
-    if (ballY <= 0) {
-      // if the ball hits the top,
-      // make it bounce off
-      speedY = -speedY;
-    }
-   
-    if(ballX > width - h) {
-      ballX = width - h;
-      // and make the x speed in the opposite direction
-      speedX = -speedX;
-    }
-     
-    if (ballX <= 0) {
-      // if the ball hits the top,
-      // make it bounce off
-      speedX = -speedX;
+
+void draw() {
+  background(0);
+
+  if (reactionStarted) {
+    for (int i=0; i < balls.length; i++ ) {
+      for (int a = 0; a < balls.length; a++) {
+        if (balls[i].isTouching(balls[a]) && balls[i].state == Ball.GROWING && balls[a].state != Ball.GROWING && i != a)
+          balls[a].state = Ball.GROWING;
+      }
     }
   }
-  
-  void plode() {
-    if (isReaction) {}
-  
-  
+
+  for (int i=0; i < balls.length; i++ ) {
+    balls[i].draw(i);
+    balls[i].process();
   }
 }
 
-void setup() {
-  size(500,500);
-  background(0);
-  smooth();
-  noStroke();
-  
-  Ball[] balls = new Ball[(int) (Math.random() * 10) + 5];
-  for( int i = 0; i < balls.length; i++) { 
-     balls[i] = new Ball();
-     fill(balls[i].rlooks,balls[i].glooks,balls[i].blooks);
-     ellipse(balls[i].ballX, balls[i].ballY, balls[i].h,balls[i].h);
+
+void mouseClicked() {
+  if ( !reactionStarted ) {
+    balls[0].x = mouseX;
+    balls[0].y = mouseY;
+    balls[0].rad = 0.1;
+    balls[0].state = Ball.GROWING;
+    reactionStarted = true;
   }
 }
