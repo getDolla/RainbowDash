@@ -45,7 +45,7 @@ class Ball {
     return dist(x, y, other.x, other.y) < (rad+other.rad);
   }
 
-  void draw(int i) {
+  void draw() {
     fill(c);
     ellipse(x, y, rad, rad);
   }
