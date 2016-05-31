@@ -42,7 +42,7 @@ class Ball {
 
 
   boolean isTouching( Ball other ) {
-    return sqrt((sq(other.x-x)) + (sq(other.y-y))) < rad+other.rad;
+    return dist(x,y,other.x,other.y) <= rad+other.rad;
   }
 
   void draw(int i) {
