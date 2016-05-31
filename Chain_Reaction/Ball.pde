@@ -42,7 +42,11 @@ class Ball {
 
 
   boolean isTouching( Ball other ) {
+<<<<<<< HEAD
     return dist(x, y, other.x, other.y) < (rad+other.rad);
+=======
+    return dist(x,y,other.x,other.y) <= rad+other.rad;
+>>>>>>> 8a68047a944965034399c7e275f15264399af5d1
   }
 
   void draw() {

@@ -21,7 +21,11 @@ void draw() {
   if (reactionStarted) {
     for (int i=balls.length-1; i >= 0; i-- ) {
       for (int a = 0; a < balls.length; a++) {
+<<<<<<< HEAD
         if ((i != a) && (balls[i].state == Ball.GROWING) && (balls[a].state != Ball.GROWING) && balls[i].isTouching(balls[a]))
+=======
+        if (balls[i].isTouching(balls[a]) && (balls[i].state == Ball.GROWING || balls[i].state == Ball.SHRINKING) && balls[a].state == Ball.MOVING && i != a)
+>>>>>>> 8a68047a944965034399c7e275f15264399af5d1
           balls[a].state = Ball.GROWING;
       }
     }
